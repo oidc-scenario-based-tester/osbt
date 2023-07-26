@@ -10,6 +10,7 @@ import (
 // TestResult represents a test result received from POST /result/add
 type TestResult struct {
 	TestName       string `json:"test_name"`
+	Description    string `json:"description"`
 	Outcome        string `json:"outcome"`
 	ErrMsg         string `json:"err_msg"`
 	Countermeasure string `json:"countermeasure"`
@@ -58,8 +59,9 @@ func StartServer() {
 
 		for _, result := range results {
 			report += fmt.Sprintf(
-				"## %s\n\n|  |  |\n| --- | --- |\n| Outcome | %s |\n| Error Message | %s |\n| Countermeasure | %s |\n\n",
+				"## %s\n\n|  |  |\n| --- | --- |\n| Description | %s |\n| Outcome | %s |\n| Error Message | %s |\n| Countermeasure | %s |\n\n",
 				result.TestName,
+				result.Description,
 				result.Outcome,
 				result.ErrMsg,
 				result.Countermeasure,
