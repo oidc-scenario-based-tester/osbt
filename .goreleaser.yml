@@ -29,6 +29,9 @@ archives:
     builds:
       - attacker-op
     format: binary
+  - id: proxy-extension
+    files:
+      - 'proxy/extension.py'
 
 # Release customization
 release:
