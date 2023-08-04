@@ -48,18 +48,58 @@ func StartServer() {
 
 	r.GET("/report", func(c *gin.Context) {
 		// Generate markdown report from all test results
-		report := "# Test Results\n\n"
-		report += "Tests conducted:\n"
+		report := "# OSBT Report\n\n"
+
+		passedTests := []TestResult{}
+		failedTests := []TestResult{}
 
 		for _, result := range results {
+			if result.Outcome == "pass" {
+				passedTests = append(passedTests, result)
+			} else {
+				failedTests = append(failedTests, result)
+			}
+		}
+
+		totalTests := len(results)
+		passedPercentage := float64(len(passedTests)) / float64(totalTests) * 100
+		failedPercentage := float64(len(failedTests)) / float64(totalTests) * 100
+		report += fmt.Sprintf("Total Tests: %d\n\n", totalTests)
+		report += fmt.Sprintf("Passed Rate: %.2f%%\n\n", passedPercentage)
+		report += fmt.Sprintf("Failed Rate: %.2f%%\n\n", failedPercentage)
+
+		report += "## \u274C Failed Tests\n"
+		report += "Tests conducted:\n"
+
+		for _, result := range failedTests {
 			report += fmt.Sprintf("- %s\n", result.TestName)
 		}
 
 		report += "\n"
 
-		for _, result := range results {
+		for _, result := range failedTests {
 			report += fmt.Sprintf(
-				"## %s\n\n|  |  |\n| --- | --- |\n| Description | %s |\n| Outcome | %s |\n| Error Message | %s |\n| Countermeasure | %s |\n\n",
+				"### %s\n\n|  |  |\n| --- | --- |\n| Description | %s |\n| Outcome | %s |\n| Error Message | %s |\n| Countermeasure | %s |\n\n",
+				result.TestName,
+				result.Description,
+				result.Outcome,
+				result.ErrMsg,
+				result.Countermeasure,
+			)
+		}
+
+		report += "## \u2705 Passed Tests\n"
+		report += "Tests conducted:\n"
+
+		for _, result := range passedTests {
+			report += fmt.Sprintf("- %s\n", result.TestName)
+		}
+
+		report += "\n"
+
+		for _, result := range passedTests {
+			report += fmt.Sprintf(
+				"### %s\n\n|  |  |\n| --- | --- |\n| Description | %s |\n| Outcome | %s |\n| Error Message | %s |\n| Countermeasure | %s |\n\n",
 				result.TestName,
 				result.Description,
 				result.Outcome,
