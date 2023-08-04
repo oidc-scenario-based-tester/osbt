@@ -1,4 +1,19 @@
 # osbt
+<p>
+  <a href="https://github.com/oidc-scenario-based-tester/osbt/releases">
+    <img src="https://img.shields.io/github/workflow/status/oidc-scenario-based-tester/osbt/goreleaser" alt="GitHub Workflow Status">
+  </a>
+    <a href="https://github.com/oidc-scenario-based-tester/osbt/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/oidc-scenario-based-tester/osbt" alt="license">
+  </a>
+    <a href="https://github.com/oidc-scenario-based-tester/osbt/releases">
+    <img src="https://img.shields.io/github/v/release/oidc-scenario-based-tester/osbt" alt="release">
+  </a>
+    <a href="https://github.com/oidc-scenario-based-tester/osbt/releases">
+    <img src="https://img.shields.io/github/downloads/oidc-scenario-based-tester/osbt/total" alt="downloads">
+  </a>
+</p>
+
 OIDC Scenario Based Tester (OSBT) is a testing tool designed to allow the flexible creation of OAuth 2.0 and OpenID Connect test scenarios using Python. 
 
 <p align="center">
