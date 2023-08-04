@@ -1,0 +1,37 @@
+# Build customization
+builds:
+  - id: osbt
+    main: ./main.go
+    binary: osbt
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+  - id: attacker-op
+    main: ./oidc/op/attacker/main.go
+    binary: attacker-op
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+
+# Archive customization
+archives:
+  - id: osbt
+    builds:
+      - osbt
+    format: binary
+  - id: attacker-op
+    builds:
+      - attacker-op
+    format: binary
+
+# Release customization
+release:
+  github:
+    owner: oidc-scenario-based-tester
+    name: osbt
