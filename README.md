@@ -120,7 +120,7 @@ $ osbt run -f scenario.py -t 30
 > - `-f`, `--file` scenario file (required)
 > - `-d`, `--dir` test directory to run all tests
 > - `-r`, `--recursive` search directories recursively
-> - `-t`, `--timeout` scenario execution timeout(seconds) (default 30)
+> - `-t`, `--timeout` scenario execution timeout (default 30s)
 
 ### Result
 You can get the result by sending a request to the server's `/results` endpoints after testing.
