@@ -48,7 +48,7 @@ $ sudo chmod +x /usr/local/bin/attacker-op
 ### Proxy Extension
 Download the source from the Releases page.
 ```
-$ curl -Lo proxy.py https://github.com/oidc-scenario-based-tester/osbt/releases/download/v0.0.1/proxy-extension.py
+$ curl -Lo proxy-extension.py https://github.com/oidc-scenario-based-tester/osbt/releases/download/v0.0.1/proxy-extension.py
 ```
 
 ## Usage
