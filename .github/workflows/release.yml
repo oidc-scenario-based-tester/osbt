@@ -27,16 +27,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Get release
+        id: get_release
+        run: |
+          upload_url=$(curl --silent "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref_name }}" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" | jq -r .upload_url)
+          echo "::set-output name=upload_url::$upload_url"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
 
       - name: Upload Release Asset
         id: upload-release-asset 
