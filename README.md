@@ -22,7 +22,8 @@ OIDC Scenario Based Tester (OSBT) is a testing tool designed to allow the flexib
 </p>
 
 
-OSBT serves to execute more complex and realistic test scenarios against libraries and applications based on OAuth2.0 and OpenID Connect. Testers can construct and execute test scenarios by programming operations such as browser automation, manipulation of proxy servers, and actions of a malicious OpenID provider using the scenario description library provided by OSBT.
+OSBT serves to execute more complex and realistic test scenarios against libraries and applications based on OAuth2.0 and OpenID Connect. Testers can construct and execute test scenarios by programming operations such as browser automation, manipulation of proxy servers, and actions of a malicious OpenID provider using the scenario description library provided by OSBT. It also supports integration into CI using GitHub Actions, which can be used for continuous automated security assessment of library applications, and reports showing test results are automatically posted to Issues.
+
 
 ## Features
 - **Easy to customize**: test by scripting scenarios in Python.
