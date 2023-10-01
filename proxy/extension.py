@@ -4,6 +4,7 @@ import socket
 import threading
 import json
 import logging
+from urllib.parse import urlparse
 
 class HttpHandler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -47,26 +48,28 @@ class MITMInterceptor:
         operation = dict_data.get("operation")
         name = dict_data.get("name")
         value = dict_data.get("value")
+        domain = dict_data.get("domain")
+        path = dict_data.get("path")
         condition = dict_data.get("condition")
-        logging.info(f"{operation}, {name}, {value}, {condition}")
+        logging.info(f"operation: {operation}, name: {name}, value: {value}, domain: {domain}, path: {path}, condition: {condition}")
 
         if operation == "add_header":
-            self.added_header.append((name, value))
+            self.added_header.append((name, value, domain, path))
             return {"status": "ok"}
         elif operation == "modify_header":
-            self.modified_header.append((name, value))
+            self.modified_header.append((name, value, domain, path))
             return {"status": "ok"}
         elif operation == "add_query_param":
-            self.added_query_param.append((name, value))
+            self.added_query_param.append((name, value, domain, path))
             return {"status": "ok"}
         elif operation == "modify_query_param":
-            self.modified_query_param.append((name, value))
+            self.modified_query_param.append((name, value, domain, path))
             return {"status": "ok"}
         elif operation == "add_body_param":
-            self.added_body_param.append((name, value))
+            self.added_body_param.append((name, value, domain, path))
             return {"status": "ok"}
         elif operation == "modify_body_param":
-            self.modified_body_param.append((name, value))
+            self.modified_body_param.append((name, value, domain, path))
             return {"status": "ok"}
         elif operation == "intercept_request":
             self.intercepted_request.append(condition)
@@ -88,29 +91,44 @@ class MITMInterceptor:
             self.store_request(flow)    
             
             request = flow.request
+            parsed_url = urlparse(request.url)
+
+            domain_name = parsed_url.netloc
+            request_path = parsed_url.path
+            
             headers = request.headers
             query = request.query
 
-            for name, value in self.added_header:
-                headers[name] = value
+            for name, value, condition_domain, condition_path in self.added_header:
+                if (condition_domain is None or condition_domain == domain_name) and \
+                (condition_path is None or condition_path == request_path):
+                    headers[name] = value
 
-            for target, value in self.modified_header:
-                if target in headers:
+            for target, value, condition_domain, condition_path in self.modified_header:
+                if (condition_domain is None or condition_domain == domain_name) and \
+                (condition_path is None or condition_path == request_path) and target in headers:
                     headers[target] = value
 
-            for name, value in self.added_query_param:
-                query[name] = value
+            for name, value, condition_domain, condition_path in self.added_query_param:
+                if (condition_domain is None or condition_domain == domain_name) and \
+                (condition_path is None or condition_path == request_path):
+                    query[name] = value
 
-            for target, value in self.modified_query_param:
-                if target in query:
+            for target, value, condition_domain, condition_path in self.modified_query_param:
+                if (condition_domain is None or condition_domain == domain_name) and \
+                (condition_path is None or condition_path == request_path) and target in query:
                     query[target] = value
 
             content = request.content.decode()
-            for name, value in self.added_body_param:
-                content += "&" + name + "=" + value
+            for name, value, condition_domain, condition_path in self.added_body_param:
+                if (condition_domain is None or condition_domain == domain_name) and \
+                (condition_path is None or condition_path == request_path):
+                    content += "&" + name + "=" + value
 
-            for target, value in self.modified_body_param:
-                content = content.replace(target, value)
+            for target, value, condition_domain, condition_path in self.modified_body_param:
+                if (condition_domain is None or condition_domain == domain_name) and \
+                (condition_path is None or condition_path == request_path):
+                    content = content.replace(target, value)
 
             request.content = content.encode()
             url = request.pretty_url
