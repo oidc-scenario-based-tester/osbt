@@ -113,7 +113,7 @@ The functionality of attacker OP will be expanded in the future.
 You must start the proxy extension to manipulate HTTP traces(request/response) between the browser and RP/OP.
 
 ```
-$ mitmdump -s proxy-extension.py
+$ mitmdump --ssl-insecure -s proxy-extension.py
 ```
 
 By default, mitmproxy runs at port `8080` and the extension server runs at port `5555` on localhost.
