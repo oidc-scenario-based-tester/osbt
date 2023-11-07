@@ -36,7 +36,7 @@ OSBT serves to execute more complex and realistic test scenarios against librari
 Download the binary from the Releases page, or compile it from the source.
 #### Linux (amd64)
 ```
-$ curl -Lo osbt https://github.com/oidc-scenario-based-tester/osbt/releases/download/v0.0.1/osbt_0.0.1_linux_amd64
+$ curl -Lo osbt https://github.com/oidc-scenario-based-tester/osbt/releases/download/v0.0.2/osbt_0.0.2_linux_amd64
 $ sudo mv osbt /usr/local/bin/
 $ sudo chmod +x /usr/local/bin/osbt
 ```
@@ -44,14 +44,14 @@ $ sudo chmod +x /usr/local/bin/osbt
 Download the binary from the Releases page, or compile it from the source.
 #### Linux (amd64)
 ```
-$ curl -Lo attacker-op https://github.com/oidc-scenario-based-tester/osbt/releases/download/v0.0.1/attacker-op_0.0.1_linux_amd64
+$ curl -Lo attacker-op https://github.com/oidc-scenario-based-tester/osbt/releases/download/v0.0.2/attacker-op_0.0.2_linux_amd64
 $ sudo mv attacker-op /usr/local/bin/
 $ sudo chmod +x /usr/local/bin/attacker-op
 ```
 ### Proxy Extension
 Download the source from the Releases page.
 ```
-$ curl -Lo proxy-extension.py https://github.com/oidc-scenario-based-tester/osbt/releases/download/v0.0.1/proxy-extension.py
+$ curl -Lo proxy-extension.py https://github.com/oidc-scenario-based-tester/osbt/releases/download/v0.0.2/proxy-extension.py
 ```
 
 ## Usage
